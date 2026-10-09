@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f57c00">
+<title>Chedarz</title>
+<style>
+:root{--hd:#f57c00;--bg:#fff8e1;--dot:#ffecb3;--in:#fff;--out:#ffe082;--card:#fffdf7;--fg:#2b1d0e;--mut:#8d6e63;--bd:#ffe0b2;--pri:#fb8c00;--blue:#1e88e5;--warn:#c62828}
+@media(prefers-color-scheme:dark){:root{--hd:#e65100;--bg:#1c1407;--dot:#2a1d0a;--in:#2e2414;--out:#8a6100;--card:#140e05;--fg:#fff3e0;--mut:#bca98a;--bd:#3a2c14;--pri:#ffa726;--blue:#64b5f6;--warn:#ff8a80}}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{background:var(--card);color:var(--fg);font:15px/1.35 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;display:flex;flex-direction:column}
+button{border:0;background:none;color:inherit;font:inherit;cursor:pointer}
+input{font:inherit;color:var(--fg);outline:none}
+.scr{display:none;flex:1;min-height:0;flex-direction:column}
+.box{margin:auto;width:min(92%,380px);display:flex;flex-direction:column;gap:12px;padding:24px;border:1px solid var(--bd);border-radius:16px}
+.box h1{font-size:22px;color:var(--pri)}.box p{color:var(--mut);font-size:13px}
+.box input,#nc input{padding:12px 14px;border:1px solid var(--bd);border-radius:10px;background:transparent;font-size:16px}
+.go{padding:12px;border-radius:24px;background:var(--pri);color:#fff;font-weight:600}
+.go:disabled{opacity:.5}
+.warn{color:var(--warn);font-size:13px}
+.hd{display:flex;align-items:center;gap:10px;padding:calc(8px + env(safe-area-inset-top,0)) 10px 8px;background:var(--hd);color:#fff}
+.hd .ic{font-size:20px;padding:4px 8px}
+.av{width:42px;height:42px;flex:none;border-radius:50%;background:#a1887f;color:#fff;display:grid;place-items:center;font-weight:700;text-transform:uppercase}
+.hd .ti{flex:1;min-width:0}.hd b{display:block;font-size:17px}.hd small{font-size:12px;opacity:.9}
+#lst{flex:1;overflow-y:auto}
+.it{display:flex;gap:12px;align-items:center;padding:10px 14px;width:100%;text-align:left;border-bottom:1px solid var(--bd)}
+.it .c{flex:1;min-width:0}.it .r{display:flex;justify-content:space-between;gap:8px}
+.it b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.it .l{color:var(--mut);font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.it .tm{font-size:12px;color:var(--mut)}.it .tm.u{color:var(--pri)}
+.bd{min-width:20px;height:20px;padding:0 6px;border-radius:10px;background:var(--pri);color:#fff;font-size:12px;display:grid;place-items:center;font-weight:700}
+.emp{margin:auto;padding:20px;text-align:center;color:var(--mut)}
+.fab{position:absolute;right:18px;bottom:calc(20px + env(safe-area-inset-bottom,0));width:56px;height:56px;border-radius:16px;background:var(--pri);color:#fff;font-size:26px;box-shadow:0 3px 8px rgba(0,0,0,.3)}
+#nc{display:none;position:absolute;inset:0;background:rgba(0,0,0,.5);align-items:center;justify-content:center;z-index:5}
+#nc>div{width:min(90%,340px);background:var(--card);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:10px}
+#msgs{flex:1;overflow-y:auto;padding:10px 10px 6px;display:flex;flex-direction:column;gap:3px;background:var(--bg);background-image:radial-gradient(var(--dot) 1.2px,transparent 1.2px);background-size:18px 18px}
+.sep{align-self:center;margin:8px 0;padding:4px 12px;border-radius:8px;background:var(--in);color:var(--mut);font-size:12px;box-shadow:0 1px 1px rgba(0,0,0,.1)}
+.empty{margin:auto;padding:8px 14px;border-radius:8px;background:var(--in);color:var(--mut);font-size:13px;text-align:center}
+.m{max-width:82%;align-self:flex-start;display:flex;flex-direction:column}
+.m.me{align-self:flex-end;align-items:flex-end}
+.t{padding:6px 9px 4px;border-radius:9px;border-top-left-radius:0;background:var(--in);box-shadow:0 1px 1px rgba(0,0,0,.13);overflow-wrap:anywhere;white-space:pre-wrap;min-width:64px}
+.m.me .t{background:var(--out);border-top-left-radius:9px;border-top-right-radius:0}
+.q{margin:2px 0 4px;padding:4px 8px;border-left:4px solid var(--pri);border-radius:6px;background:rgba(0,0,0,.07);font-size:13px;color:var(--mut);white-space:normal}
+.q b{display:block;color:var(--pri);font-size:12px}
+.del{font-style:italic;color:var(--mut)}
+.mt{float:right;margin:6px 0 0 10px;font-size:11px;color:var(--mut);display:flex;gap:3px;white-space:nowrap}
+.tk.b{color:var(--blue)}
+.act{display:flex;gap:6px;margin:3px 0}
+.act button{padding:5px 12px;border-radius:14px;background:var(--in);font-size:13px;box-shadow:0 1px 1px rgba(0,0,0,.15)}
+#rp{display:none;align-items:center;gap:8px;padding:8px 12px;background:var(--card);border-top:1px solid var(--bd)}
+#rp .q{flex:1;margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#em{display:none;flex-wrap:wrap;gap:2px;padding:6px 10px;background:var(--card);border-top:1px solid var(--bd)}
+#em button{font-size:24px;padding:4px 6px}
+#err{color:var(--warn);font-size:12px;padding:3px 14px;background:var(--bg)}
+#err:empty{display:none}
+.bar{display:flex;align-items:center;gap:6px;padding:6px 8px calc(6px + env(safe-area-inset-bottom,0));background:var(--bg)}
+.pill{flex:1;display:flex;align-items:center;background:var(--in);border-radius:24px;padding:0 6px}
+.pill input{flex:1;border:0;background:transparent;padding:11px 6px;font-size:16px;min-width:0}
+.pill button{font-size:22px;padding:4px 6px}
+.snd{width:44px;height:44px;border-radius:50%;background:var(--pri);color:#fff;display:grid;place-items:center}
+</style>
+</head>
+<body>
+<div class="scr" id="login" style="display:flex">
+ <div class="box">
+  <h1>💬 Chedarz</h1>
+  <p>Masuk dengan nomor dan kata sandi. Akunmu tersimpan permanen dan bisa dibuka dari HP mana pun.</p>
+  <input id="nm" placeholder="Nama kamu (diisi saat daftar)" maxlength="20" autocomplete="off">
+  <input id="ph" type="tel" placeholder="Nomor telepon (08xx / 628xx)" maxlength="16" autocomplete="off">
+  <input id="pw" type="password" placeholder="Kata sandi (min. 6 karakter)" maxlength="40" autocomplete="current-password">
+  <button class="go" id="go" disabled>Menghubungkan…</button>
+  <button id="reg" disabled style="color:var(--pri);font-weight:600">Daftar akun baru</button>
+  <div class="warn" id="warn"></div>
+ </div>
+</div>
+<div class="scr" id="list" style="position:relative">
+ <div class="hd"><div class="av" id="mav"></div><div class="ti"><b>Chedarz</b><small id="mph"></small></div><button class="ic" id="out" title="Keluar">⎋</button></div>
+ <div id="lst"></div>
+ <button class="fab" id="fab">💬</button>
+ <div id="nc"><div>
+  <b>Chat baru</b><input id="np" type="tel" placeholder="Nomor telepon teman" maxlength="16">
+  <div class="warn" id="ne"></div>
+  <button class="go" id="ng">Mulai chat</button><button id="nx" style="color:var(--mut)">Batal</button>
+ </div></div>
+</div>
+<div class="scr" id="chat">
+ <div class="hd"><button class="ic" id="bk">←</button><div class="av" id="cav"></div><div class="ti"><b id="ct"></b><small id="st"></small></div></div>
+ <div id="msgs"></div><div id="err"></div>
+ <div id="rp"><div class="q" id="rq"></div><button id="rx">✕</button></div>
+ <div id="em"></div>
+ <div class="bar"><div class="pill"><button id="eb">😊</button><input id="inp" placeholder="Ketik pesan" maxlength="500" autocomplete="off"></div>
+ <button class="snd" id="send"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg></button></div>
+</div>
+
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import {getDatabase,ref,push,set,get,update,remove,onValue,query,limitToLast,serverTimestamp,increment,onDisconnect} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
+import {getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+const cfg={apiKey:"AIzaSyBDolZieTBFhLXZLRAFb6KzzBiJkx0aN5k",authDomain:"chedarz.firebaseapp.com",projectId:"chedarz",storageBucket:"chedarz.firebasestorage.app",messagingSenderId:"584278897721",appId:"1:584278897721:web:0c13797ede87816850c9e8"};
+const CAND=["https://chedarz-default-rtdb.firebaseio.com","https://chedarz-default-rtdb.asia-southeast1.firebasedatabase.app","https://chedarz-default-rtdb.europe-west1.firebasedatabase.app"];
+const $=s=>document.querySelector(s);
+const ls=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);v===null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch(e){return null}};
+const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!==undefined)e.textContent=x;return e};
+const EMO=['😀','😂','🥹','😍','😘','😎','🤔','😭','👍','🙏','🔥','❤️','🎉','😅','🤝','👀'];
+const hm=t=>new Date(t).toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
+const dl=t=>{const d=new Date(t),n=new Date(),y=new Date();y.setDate(n.getDate()-1);return d.toDateString()===n.toDateString()?'Hari ini':d.toDateString()===y.toDateString()?'Kemarin':d.toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})};
+const norm=s=>{let d=String(s).replace(/\D/g,'');if(d.startsWith('0'))d='62'+d.slice(1);return d.length>=9?d:''};
+const show=id=>{['login','list','chat'].forEach(s=>$('#'+s).style.display=s===id?'flex':'none')};
+
+let db,auth,me='',myName='',peer='',peerName='',cid='',msgs=[],items={},seen={},pinfo={},ptyping=false,sel=null,replyTo=null,mySeen=0,tT=null,typing=false,sending=false,offs=[],lOff=null;
+
+(async()=>{
+ let url=null;
+ for(const u of CAND){try{const r=await fetch(u+'/.json?shallow=true');if(r.ok||r.status===401){url=u;break}}catch(e){}}
+ if(!url){$('#go').textContent='Tidak terhubung';$('#warn').textContent='Database tidak ditemukan. Pastikan Realtime Database sudah dibuat, lalu muat ulang.';return}
+ db=getDatabase(initializeApp({...cfg,databaseURL:url}));
+ auth=getAuth();$('#go').disabled=false;$('#reg').disabled=false;$('#go').textContent='Masuk';
+ onAuthStateChanged(auth,async u=>{
+  if(!u||me)return;
+  const p=u.email.split('@')[0];let n='';
+  try{n=(await get(ref(db,'users/'+p+'/name'))).val()||''}catch(e){}
+  enter(regName||n||('+'+p),p);
+ });
+})();
+
+let regName='';
+async function doAuth(isReg){
+ const w=$('#warn');w.textContent='';
+ const n=$('#nm').value.trim(),p=norm($('#ph').value),pw=$('#pw').value;
+ if(!p){w.textContent='Nomor telepon tidak valid.';return}
+ if(pw.length<6){w.textContent='Kata sandi minimal 6 karakter.';return}
+ if(isReg&&n.length<2){w.textContent='Isi nama (min. 2 huruf) untuk mendaftar.';return}
+ const em=p+'@chedarz.app';
+ try{
+  if(isReg){regName=n;await createUserWithEmailAndPassword(auth,em,pw)}
+  else await signInWithEmailAndPassword(auth,em,pw);
+ }catch(e){
+  const c=e&&e.code||'';
+  w.textContent=c==='auth/email-already-in-use'?'Nomor sudah terdaftar. Tekan Masuk.':c==='auth/operation-not-allowed'?'Aktifkan Email/Password di Firebase Authentication.':c==='auth/weak-password'?'Kata sandi terlalu lemah.':(c==='auth/invalid-credential'||c==='auth/user-not-found'||c==='auth/wrong-password')?'Nomor atau kata sandi salah.':'Gagal ('+c+').';
+ }
+}
+function enter(n,p){
+ me=p;myName=n;
+ const u=ref(db,'users/'+me);
+ update(u,{name:n}).catch(e=>{$('#warn').textContent='Gagal masuk ('+(e&&e.code||'error')+'). Cek aturan database.'});
+ const on=ref(db,'users/'+me+'/online');set(on,true);onDisconnect(on).set(false);
+ onDisconnect(ref(db,'users/'+me+'/last')).set(serverTimestamp());
+ $('#mav').textContent=n[0];$('#mph').textContent=n+' · +'+me;
+ show('list');
+ lOff=onValue(ref(db,'userChats/'+me),s=>{items=s.val()||{};renderList()});
+}
+function renderList(){
+ const box=$('#lst');box.textContent='';
+ const a=Object.entries(items).sort((x,y)=>(y[1].ts||0)-(x[1].ts||0));
+ if(!a.length)box.appendChild(el('div','emp','Belum ada chat.\nTekan 💬 untuk mulai chat dengan nomor teman.'));
+ a.forEach(([p,v])=>{
+  const b=el('button','it'),nm=v.name||('+'+p);
+  b.appendChild(el('div','av',nm[0]==='+'?'#':nm[0]));
+  const c=el('div','c'),r1=el('div','r'),r2=el('div','r');
+  r1.appendChild(el('b','',nm));r1.appendChild(el('span','tm'+(v.unread?' u':''),v.ts?hm(v.ts):''));
+  r2.appendChild(el('div','l',v.last||''));if(v.unread)r2.appendChild(el('span','bd',v.unread));
+  c.appendChild(r1);c.appendChild(r2);b.appendChild(c);b.onclick=()=>openChat(p,nm);box.appendChild(b);
+ });
+}
+function openChat(p,nm){
+ peer=p;peerName=nm;cid=[me,p].sort().join('_');msgs=[];seen={};pinfo={};ptyping=false;mySeen=0;sel=null;
+ $('#ct').textContent=nm;$('#cav').textContent=nm[0]==='+'?'#':nm[0];$('#err').textContent='';
+ show('chat');
+ if(items[p])update(ref(db,'userChats/'+me+'/'+p),{unread:0}).catch(()=>{});
+ offs=[
+  onValue(query(ref(db,'chats/'+cid+'/messages'),limitToLast(150)),s=>{msgs=[];s.forEach(c=>{msgs.push({k:c.key,...c.val()})});render()},e=>{$('#err').textContent='Gagal membaca pesan ('+(e&&e.code||'error')+').'}),
+  onValue(ref(db,'chats/'+cid+'/seen/'+p),s=>{seen=s.val()||0;render()}),
+  onValue(ref(db,'users/'+p),s=>{pinfo=s.val()||{};if(pinfo.name&&pinfo.name!==peerName){peerName=pinfo.name;$('#ct').textContent=peerName}status();render()}),
+  onValue(ref(db,'chats/'+cid+'/typing/'+p),s=>{ptyping=!!s.val();status()})
+ ];
+}
+function status(){
+ $('#st').textContent=ptyping?'sedang mengetik…':pinfo.online?'online':pinfo.last?('terakhir dilihat '+dl(pinfo.last).toLowerCase()+' '+hm(pinfo.last)):'+'+peer;
+}
+function render(){
+ const box=$('#msgs'),near=box.scrollHeight-box.scrollTop-box.clientHeight<90;
+ box.textContent='';
+ if(!msgs.length)box.appendChild(el('div','empty','Belum ada pesan. Sapa duluan! 👋'));
+ let day='';
+ msgs.forEach(m=>{
+  const ts=m.ts||Date.now(),d=dl(ts);
+  if(d!==day){day=d;box.appendChild(el('div','sep',d))}
+  const own=m.from===me,row=el('div','m'+(own?' me':'')),b=el('div','t');
+  if(m.reply&&!m.del){const q=el('div','q');q.appendChild(el('b','',m.reply.name));q.appendChild(document.createTextNode(m.reply.text));b.appendChild(q)}
+  b.appendChild(m.del?el('span','del','🚫 Pesan ini telah dihapus'):el('span','',m.text));
+  const mt=el('span','mt',hm(ts));
+  if(own&&!m.del){const rd=ts<=seen;mt.appendChild(el('span','tk'+(rd?' b':''),rd||pinfo.online?'✓✓':'✓'))}
+  b.appendChild(mt);
+  if(!m.del)b.onclick=()=>{sel=sel===m.k?null:m.k;render()};
+  row.appendChild(b);
+  if(sel===m.k){
+   const a=el('div','act'),r=el('button','','↩ Balas');
+   r.onclick=e=>{e.stopPropagation();setReply(m)};a.appendChild(r);
+   if(own){const x=el('button','','🗑 Hapus');x.onclick=e=>{e.stopPropagation();sel=null;update(ref(db,'chats/'+cid+'/messages/'+m.k),{del:true,text:'',reply:null})};a.appendChild(x)}
+   row.appendChild(a);
+  }
+  box.appendChild(row);
+ });
+ if(near)box.scrollTop=box.scrollHeight;
+ const last=msgs.length?msgs[msgs.length-1].ts:0;
+ if(document.visibilityState==='visible'&&typeof last==='number'&&last>mySeen){mySeen=last;set(ref(db,'chats/'+cid+'/seen/'+me),last).catch(()=>{})}
+}
+function setReply(m){
+ sel=null;replyTo={name:m.from===me?'Kamu':peerName,text:(m.text||'').slice(0,80)};
+ $('#rq').textContent='';$('#rq').appendChild(el('b','',replyTo.name));$('#rq').appendChild(document.createTextNode(replyTo.text));
+ $('#rp').style.display='flex';render();$('#inp').focus();
+}
+const clearReply=()=>{replyTo=null;$('#rp').style.display='none'};
+function stopTyping(){if(typing){typing=false;remove(ref(db,'chats/'+cid+'/typing/'+me)).catch(()=>{})}}
+async function send(){
+ const t=$('#inp').value.trim();
+ if(!t||sending)return;
+ sending=true;$('#inp').value='';$('#err').textContent='';stopTyping();clearTimeout(tT);
+ const data={from:me,name:myName,text:t.slice(0,500),ts:serverTimestamp()};
+ if(replyTo)data.reply=replyTo;
+ const mk=push(ref(db,'chats/'+cid+'/messages')).key,up={};
+ up['chats/'+cid+'/messages/'+mk]=data;
+ up['userChats/'+me+'/'+peer+'/name']=peerName;up['userChats/'+me+'/'+peer+'/last']='Kamu: '+t.slice(0,60);
+ up['userChats/'+me+'/'+peer+'/ts']=serverTimestamp();up['userChats/'+me+'/'+peer+'/unread']=0;
+ up['userChats/'+peer+'/'+me+'/name']=myName;up['userChats/'+peer+'/'+me+'/last']=t.slice(0,60);
+ up['userChats/'+peer+'/'+me+'/ts']=serverTimestamp();up['userChats/'+peer+'/'+me+'/unread']=increment(1);
+ try{await update(ref(db),up);clearReply()}catch(e){$('#inp').value=t;$('#err').textContent='Pesan gagal terkirim ('+(e&&e.code||'error')+').'}
+ sending=false;$('#inp').focus();setTimeout(()=>{$('#msgs').scrollTop=$('#msgs').scrollHeight},50);
+}
+function back(){offs.forEach(f=>f());offs=[];stopTyping();clearReply();$('#em').style.display='none';show('list')}
+async function newChat(){
+ const p=norm($('#np').value),e=$('#ne');e.textContent='';
+ if(!p){e.textContent='Nomor tidak valid.';return}
+ if(p===me){e.textContent='Itu nomor kamu sendiri.';return}
+ try{
+  const s=await get(ref(db,'users/'+p));
+  if(!s.exists()){e.textContent='Nomor ini belum terdaftar. Minta temanmu daftar dulu.';return}
+  $('#nc').style.display='none';$('#np').value='';openChat(p,s.val().name||('+'+p));
+ }catch(x){e.textContent='Gagal mencari nomor ('+(x&&x.code||'error')+').'}
+}
+EMO.forEach(e=>{const b=el('button','',e);b.onclick=()=>{$('#inp').value+=e;$('#inp').focus()};$('#em').appendChild(b)});
+$('#eb').onclick=()=>{const p=$('#em');p.style.display=p.style.display==='flex'?'none':'flex'};
+$('#go').onclick=()=>doAuth(false);$('#reg').onclick=()=>doAuth(true);$('#pw').addEventListener('keydown',e=>{if(e.key==='Enter'&&!$('#go').disabled)doAuth(false)});
+$('#fab').onclick=()=>{$('#nc').style.display='flex';$('#np').focus()};
+$('#nx').onclick=()=>{$('#nc').style.display='none';$('#ne').textContent=''};
+$('#ng').onclick=newChat;$('#np').addEventListener('keydown',e=>{if(e.key==='Enter')newChat()});
+$('#bk').onclick=back;$('#send').onclick=send;$('#rx').onclick=clearReply;
+$('#inp').addEventListener('keydown',e=>{if(e.key==='Enter')send()});
+$('#inp').addEventListener('input',()=>{
+ if(!typing){typing=true;const r=ref(db,'chats/'+cid+'/typing/'+me);set(r,true).catch(()=>{});onDisconnect(r).remove()}
+ clearTimeout(tT);tT=setTimeout(stopTyping,2500);
+});
+$('#out').onclick=()=>{if(!confirm('Keluar dari akun ini?'))return;if(lOff)lOff();set(ref(db,'users/'+me+'/online'),false);signOut(auth);me='';regName='';$('#pw').value='';show('login')};
+document.addEventListener('visibilitychange',()=>{if(cid&&$('#chat').style.display==='flex')render()});
+</script>
+</body>
+</html>
