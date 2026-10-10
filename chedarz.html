@@ -62,8 +62,8 @@ input{font:inherit;color:var(--fg);outline:none}
 .act button{padding:5px 12px;border-radius:14px;background:var(--in);font-size:13px;box-shadow:0 1px 1px rgba(0,0,0,.15)}
 #rp{display:none;align-items:center;gap:8px;padding:8px 12px;background:var(--card);border-top:1px solid var(--bd)}
 #rp .q{flex:1;margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-#em{display:none;flex-wrap:wrap;gap:2px;padding:6px 10px;background:var(--card);border-top:1px solid var(--bd)}
-#em button{font-size:24px;padding:4px 6px}
+#emo{display:none;flex-wrap:wrap;gap:2px;padding:6px 10px;background:var(--card);border-top:1px solid var(--bd)}
+#emo button{font-size:24px;padding:4px 6px}
 #err{color:var(--warn);font-size:12px;padding:3px 14px;background:var(--bg)}
 #err:empty{display:none}
 .bar{display:flex;align-items:center;gap:6px;padding:6px 8px calc(6px + env(safe-area-inset-bottom,0));background:var(--bg)}
@@ -124,7 +124,7 @@ input{font:inherit;color:var(--fg);outline:none}
  <div class="hd"><button class="ic" id="bk">←</button><div class="av" id="cav"></div><div class="ti"><b id="ct"></b><small id="st"></small></div><button class="ic" id="lg" style="display:none" title="Keluar dari grup">⎋</button></div>
  <div id="msgs"></div><div id="err"></div>
  <div id="rp"><div class="q" id="rq"></div><button id="rx">✕</button></div>
- <div id="em"></div>
+ <div id="emo"></div>
  <div class="bar"><div class="pill"><button id="eb">😊</button><button id="ab">📷</button><input id="af" type="file" accept="image/*" hidden><input id="inp" placeholder="Ketik pesan" maxlength="500" autocomplete="off"></div>
  <button class="snd" id="send"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg></button></div>
 </div>
@@ -186,7 +186,7 @@ function setMode(r){
 }
 async function doAuth(){
  const w=$('#warn');w.textContent='';
- const pw=$('#pw').value,idv=$('#em').value.trim();
+ const pw=$('#pw').value,idv=$('#em').value.replace(/[\s\u200b-\u200d\ufeff]/g,'').replace(/＠/g,'@');
  if(pw.length<6){w.textContent='Kata sandi minimal 6 karakter.';return}
  try{
   if(regMode){
@@ -308,7 +308,7 @@ async function send(img){
  try{await update(ref(db),up);clearReply()}catch(e){$('#inp').value=t;$('#err').textContent='Pesan gagal terkirim ('+(e&&e.code||'error')+').'}
  sending=false;$('#inp').focus();setTimeout(()=>{$('#msgs').scrollTop=$('#msgs').scrollHeight},50);
 }
-function back(){offs.forEach(f=>f());offs=[];stopTyping();clearReply();$('#em').style.display='none';show('list')}
+function back(){offs.forEach(f=>f());offs=[];stopTyping();clearReply();$('#emo').style.display='none';show('list')}
 async function newChat(){
  const p=norm($('#np').value),e=$('#ne');e.textContent='';
  if(!p){e.textContent='Nomor tidak valid.';return}
@@ -319,8 +319,8 @@ async function newChat(){
   $('#nc').style.display='none';$('#np').value='';openChat(p,s.val().name||('+'+p));
  }catch(x){e.textContent='Gagal mencari nomor ('+(x&&x.code||'error')+').'}
 }
-EMO.forEach(e=>{const b=el('button','',e);b.onclick=()=>{$('#inp').value+=e;$('#inp').focus()};$('#em').appendChild(b)});
-$('#eb').onclick=()=>{const p=$('#em');p.style.display=p.style.display==='flex'?'none':'flex'};
+EMO.forEach(e=>{const b=el('button','',e);b.onclick=()=>{$('#inp').value+=e;$('#inp').focus()};$('#emo').appendChild(b)});
+$('#eb').onclick=()=>{const p=$('#emo');p.style.display=p.style.display==='flex'?'none':'flex'};
 $('#go').onclick=doAuth;$('#reg').onclick=()=>setMode(!regMode);$('#fg').onclick=resetPw;$('#pw').addEventListener('keydown',e=>{if(e.key==='Enter'&&!$('#go').disabled)doAuth()});setMode(false);
 $('#fab').onclick=()=>{if(tab==='p'){$('#nc').style.display='flex';$('#np').focus()}else if(tab==='g')$('#gc').style.display='flex';else openComposer()};
 $('#nx').onclick=()=>{$('#nc').style.display='none';$('#ne').textContent=''};
