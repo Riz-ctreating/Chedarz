@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f57c00">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
 <title>Chedarz</title>
 <style>
 :root{--hd:#f57c00;--bg:#fff8e1;--dot:#ffecb3;--in:#fff;--out:#ffe082;--card:#fffdf7;--fg:#2b1d0e;--mut:#8d6e63;--bd:#ffe0b2;--pri:#fb8c00;--blue:#1e88e5;--warn:#c62828}
@@ -144,6 +147,7 @@ import {getDatabase,ref,push,set,get,update,remove,onValue,query,limitToLast,ser
 import {getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,onAuthStateChanged,signOut,sendPasswordResetEmail} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 const cfg={apiKey:"AIzaSyBDolZieTBFhLXZLRAFb6KzzBiJkx0aN5k",authDomain:"chedarz.firebaseapp.com",projectId:"chedarz",storageBucket:"chedarz.firebasestorage.app",messagingSenderId:"584278897721",appId:"1:584278897721:web:0c13797ede87816850c9e8"};
 const CAND=["https://chedarz-default-rtdb.firebaseio.com","https://chedarz-default-rtdb.asia-southeast1.firebasedatabase.app","https://chedarz-default-rtdb.europe-west1.firebasedatabase.app"];
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 const $=s=>document.querySelector(s);
 const ls=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);v===null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch(e){return null}};
 const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!==undefined)e.textContent=x;return e};
