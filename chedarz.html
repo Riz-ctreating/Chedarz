@@ -25,7 +25,7 @@ input{font:inherit;color:var(--fg);outline:none}
 .av{width:42px;height:42px;flex:none;border-radius:50%;background:#a1887f;color:#fff;display:grid;place-items:center;font-weight:700;text-transform:uppercase}
 .hd .ti{flex:1;min-width:0}.hd b{display:block;font-size:17px}.hd small{font-size:12px;opacity:.9}
 #lst{flex:1;overflow-y:auto}
-.tabs{display:flex;background:var(--hd);color:#fff}.tabs button{flex:1;padding:10px;font-weight:600;opacity:.7;border-bottom:3px solid transparent}.tabs button.on{opacity:1;border-color:#fff}
+.tabs{display:flex;background:var(--card);border-top:1px solid var(--bd);padding-bottom:env(safe-area-inset-bottom,0)}.tabs button{flex:1;padding:8px 0 6px;font-size:12px;font-weight:600;color:var(--mut);display:flex;flex-direction:column;align-items:center;gap:3px}.tabs button i{font-style:normal;font-size:20px;padding:2px 18px;border-radius:14px}.tabs button.on{color:var(--fg)}.tabs button.on i{background:var(--out)}
 .gn{font-size:13px;font-weight:600;margin-bottom:1px}
 .pc{padding:12px 14px;border-bottom:1px solid var(--bd)}.ph{display:flex;gap:10px;align-items:center;margin-bottom:8px}.ph>div:nth-child(2){flex:1}.ph small{display:block;color:var(--mut);font-size:12px}
 .pt{margin:6px 0;white-space:pre-wrap;overflow-wrap:anywhere}.pi,.vv{width:100%;max-height:420px;object-fit:cover;border-radius:12px;background:#000;display:block}
@@ -33,6 +33,9 @@ input{font:inherit;color:var(--fg);outline:none}
 .lk{margin-top:8px;padding:6px 14px;border-radius:18px;background:var(--hd);color:#fff;display:inline-flex;align-items:center;gap:6px;font-weight:600}.lk svg{width:24px;height:24px;stroke-linejoin:round}.ck{fill:none;stroke:#fff;stroke-width:1.6}.ho{fill:none;stroke:#fff;stroke-width:1.3}.lk.on .ck{fill:#ffd54f}.lk.on .ho{fill:#f57c00;stroke:none}
 #pc textarea{padding:12px 14px;border:1px solid var(--bd);border-radius:10px;background:transparent;font-size:16px;resize:none;font-family:inherit}
 .fl{padding:10px 12px;border:1px dashed var(--bd);border-radius:10px;color:var(--mut);cursor:pointer}
+.ci{display:block;max-width:100%;max-height:300px;border-radius:8px;margin-bottom:4px}
+.cl{margin-top:8px;padding:8px;border-radius:10px;background:var(--bg)}.cr{padding:3px 0;font-size:14px;overflow-wrap:anywhere}.cr b{color:var(--pri)}.cd{margin-left:6px;color:var(--mut);font-size:12px}
+.cf{display:flex;gap:6px;margin-top:6px}.cf input{flex:1;padding:8px 12px;border:1px solid var(--bd);border-radius:18px;background:transparent;font-size:15px}.cf button{color:var(--pri);font-weight:600}
 .it{display:flex;gap:12px;align-items:center;padding:10px 14px;width:100%;text-align:left;border-bottom:1px solid var(--bd)}
 .it .c{flex:1;min-width:0}.it .r{display:flex;justify-content:space-between;gap:8px}
 .it b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -40,9 +43,9 @@ input{font:inherit;color:var(--fg);outline:none}
 .it .tm{font-size:12px;color:var(--mut)}.it .tm.u{color:var(--pri)}
 .bd{min-width:20px;height:20px;padding:0 6px;border-radius:10px;background:var(--pri);color:#fff;font-size:12px;display:grid;place-items:center;font-weight:700}
 .emp{margin:auto;padding:20px;text-align:center;color:var(--mut);white-space:pre-line}
-.fab{position:absolute;right:18px;bottom:calc(20px + env(safe-area-inset-bottom,0));width:56px;height:56px;border-radius:16px;background:var(--pri);color:#fff;font-size:26px;box-shadow:0 3px 8px rgba(0,0,0,.3)}
-#nc,#gc,#pc{display:none;position:absolute;inset:0;background:rgba(0,0,0,.5);align-items:center;justify-content:center;z-index:5}
-#nc>div,#gc>div,#pc>div{width:min(90%,340px);background:var(--card);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:10px}
+.fab{position:absolute;right:18px;bottom:calc(86px + env(safe-area-inset-bottom,0));width:56px;height:56px;border-radius:16px;background:var(--pri);color:#fff;font-size:26px;box-shadow:0 3px 8px rgba(0,0,0,.3)}
+#nc,#gc,#pc,#pr{display:none;position:absolute;inset:0;background:rgba(0,0,0,.5);align-items:center;justify-content:center;z-index:5}
+#nc>div,#gc>div,#pc>div,#pr>div{width:min(90%,340px);background:var(--card);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:10px}
 #msgs{flex:1;overflow-y:auto;padding:10px 10px 6px;display:flex;flex-direction:column;gap:3px;background:var(--bg);background-image:radial-gradient(var(--dot) 1.2px,transparent 1.2px);background-size:18px 18px}
 .sep{align-self:center;margin:8px 0;padding:4px 12px;border-radius:8px;background:var(--in);color:var(--mut);font-size:12px;box-shadow:0 1px 1px rgba(0,0,0,.1)}
 .empty{margin:auto;padding:8px 14px;border-radius:8px;background:var(--in);color:var(--mut);font-size:13px;text-align:center}
@@ -74,18 +77,20 @@ input{font:inherit;color:var(--fg);outline:none}
 <div class="scr" id="login" style="display:flex">
  <div class="box">
   <h1>💬 Chedarz</h1>
-  <p>Masuk dengan nomor dan kata sandi. Akunmu tersimpan permanen dan bisa dibuka dari HP mana pun.</p>
-  <input id="nm" placeholder="Nama kamu (diisi saat daftar)" maxlength="20" autocomplete="off">
-  <input id="ph" type="tel" placeholder="Nomor telepon (08xx / 628xx)" maxlength="16" autocomplete="off">
+  <p id="lp">Masuk dengan email atau nomor telepon dan kata sandi.</p>
+  <input id="nm" class="rg" placeholder="Nama kamu" maxlength="20" autocomplete="off">
+  <input id="ph" class="rg" type="tel" placeholder="Nomor telepon (08xx / 628xx)" maxlength="16" autocomplete="off">
+  <input id="em" placeholder="Email atau nomor telepon" maxlength="60" autocomplete="username">
   <input id="pw" type="password" placeholder="Kata sandi (min. 6 karakter)" maxlength="40" autocomplete="current-password">
   <button class="go" id="go" disabled>Menghubungkan…</button>
+  <button id="fg" style="color:var(--mut);font-size:13px">Lupa kata sandi?</button>
   <button id="reg" disabled style="color:var(--pri);font-weight:600">Daftar akun baru</button>
   <div class="warn" id="warn"></div>
  </div>
 </div>
 <div class="scr" id="list" style="position:relative">
  <div class="hd"><div class="av" id="mav"></div><div class="ti"><b>Chedarz</b><small id="mph"></small></div><button class="ic" id="out" title="Keluar">⎋</button></div>
- <div class="tabs"><button id="tp" class="on">Chat</button><button id="tg">Grup</button><button id="to">Post</button><button id="tv">Video</button></div><div id="lst"></div>
+ <div id="lst"></div><div class="tabs"><button id="tp" class="on"><i>💬</i>Chat</button><button id="tg"><i>👥</i>Grup</button><button id="to"><i>📝</i>Post</button><button id="tv"><i>🎬</i>Video</button></div>
  <div id="gc"><div>
   <b>Buat grup baru</b><input id="gn" placeholder="Nama grup" maxlength="30">
   <button class="go" id="gm">Buat grup</button>
@@ -93,9 +98,17 @@ input{font:inherit;color:var(--fg);outline:none}
   <div class="warn" id="ge"></div>
   <button class="go" id="gj">Gabung</button><button id="gx" style="color:var(--mut)">Tutup</button>
  </div></div>
+ <div id="pr"><div style="align-items:center">
+  <div class="av" id="pav" style="width:96px;height:96px;font-size:40px"></div>
+  <b id="pnm"></b>
+  <label class="go" style="text-align:center;cursor:pointer;width:100%">Ganti foto<input id="pfi" type="file" accept="image/*" hidden></label>
+  <button id="prm" style="color:var(--warn)">Hapus foto</button>
+  <button id="pcx" style="color:var(--mut)">Tutup</button>
+ </div></div>
  <div id="pc"><div>
   <b id="pct"></b><textarea id="ptx" rows="3" maxlength="500"></textarea>
   <label class="fl">📎 <span id="pfl"></span><input id="pf" type="file" hidden></label>
+  <button class="go" id="pcm" type="button" style="background:transparent;border:1px solid var(--pri);color:var(--pri)"></button>
   <img id="ppv" style="display:none;max-height:140px;border-radius:10px;object-fit:cover">
   <div class="warn" id="pe"></div>
   <button class="go" id="po">Kirim</button><button id="px" style="color:var(--mut)">Batal</button>
@@ -108,18 +121,27 @@ input{font:inherit;color:var(--fg);outline:none}
  </div></div>
 </div>
 <div class="scr" id="chat">
- <div class="hd"><button class="ic" id="bk">←</button><div class="av" id="cav"></div><div class="ti"><b id="ct"></b><small id="st"></small></div></div>
+ <div class="hd"><button class="ic" id="bk">←</button><div class="av" id="cav"></div><div class="ti"><b id="ct"></b><small id="st"></small></div><button class="ic" id="lg" style="display:none" title="Keluar dari grup">⎋</button></div>
  <div id="msgs"></div><div id="err"></div>
  <div id="rp"><div class="q" id="rq"></div><button id="rx">✕</button></div>
  <div id="em"></div>
- <div class="bar"><div class="pill"><button id="eb">😊</button><input id="inp" placeholder="Ketik pesan" maxlength="500" autocomplete="off"></div>
+ <div class="bar"><div class="pill"><button id="eb">😊</button><button id="ab">📷</button><input id="af" type="file" accept="image/*" hidden><input id="inp" placeholder="Ketik pesan" maxlength="500" autocomplete="off"></div>
  <button class="snd" id="send"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg></button></div>
 </div>
 
+<div id="cam" style="display:none;position:fixed;inset:0;background:#000;z-index:20;flex-direction:column">
+ <video id="cmv" playsinline muted autoplay style="flex:1;min-height:0;width:100%;object-fit:cover"></video>
+ <div id="cmt" style="position:absolute;top:calc(14px + env(safe-area-inset-top,0px));left:0;right:0;text-align:center;color:#fff;font-weight:700;text-shadow:0 1px 3px #000"></div>
+ <div style="display:flex;justify-content:space-around;align-items:center;padding:16px 0 calc(16px + env(safe-area-inset-bottom,0px));background:#000">
+  <button id="cmx" style="color:#fff;font-size:28px">✕</button>
+  <button id="cmr" style="width:68px;height:68px;border-radius:50%;border:4px solid #fff;background:#e53935"></button>
+  <button id="cms" style="color:#fff;font-size:28px">🔄</button>
+ </div>
+</div>
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import {getDatabase,ref,push,set,get,update,remove,onValue,query,limitToLast,serverTimestamp,increment,onDisconnect} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
-import {getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import {getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,onAuthStateChanged,signOut,sendPasswordResetEmail} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 const cfg={apiKey:"AIzaSyBDolZieTBFhLXZLRAFb6KzzBiJkx0aN5k",authDomain:"chedarz.firebaseapp.com",projectId:"chedarz",storageBucket:"chedarz.firebasestorage.app",messagingSenderId:"584278897721",appId:"1:584278897721:web:0c13797ede87816850c9e8"};
 const CAND=["https://chedarz-default-rtdb.firebaseio.com","https://chedarz-default-rtdb.asia-southeast1.firebasedatabase.app","https://chedarz-default-rtdb.europe-west1.firebasedatabase.app"];
 const $=s=>document.querySelector(s);
@@ -131,7 +153,7 @@ const dl=t=>{const d=new Date(t),n=new Date(),y=new Date();y.setDate(n.getDate()
 const norm=s=>{let d=String(s).replace(/\D/g,'');if(d.startsWith('0'))d='62'+d.slice(1);return d.length>=9?d:''};
 const show=id=>{['login','list','chat'].forEach(s=>$('#'+s).style.display=s===id?'flex':'none')};
 
-let db,auth,mode='p',tab='p',posts={},vids={},vcache={},fOff={},vplay='',gitems={},members={},gtyp={},me='',myName='',peer='',peerName='',cid='',msgs=[],items={},seen={},pinfo={},ptyping=false,sel=null,replyTo=null,mySeen=0,tT=null,typing=false,sending=false,offs=[],lOff=null,gOff=null;
+let db,auth,mode='p',tab='p',posts={},vids={},vcache={},fOff={},vplay='',openC={},gitems={},members={},gtyp={},me='',myName='',peer='',peerName='',cid='',msgs=[],items={},seen={},pinfo={},ptyping=false,sel=null,replyTo=null,mySeen=0,tT=null,typing=false,sending=false,offs=[],lOff=null,gOff=null;
 
 (async()=>{
  let url=null;
@@ -142,27 +164,54 @@ let db,auth,mode='p',tab='p',posts={},vids={},vcache={},fOff={},vplay='',gitems=
  auth=getAuth();$('#go').disabled=false;$('#reg').disabled=false;$('#go').textContent='Masuk';
  onAuthStateChanged(auth,async u=>{
   if(!u||me)return;
-  const p=u.email.split('@')[0];let n='';
-  try{n=(await get(ref(db,'users/'+p+'/name'))).val()||''}catch(e){}
-  enter(regName||n||('+'+p),p);
+  let p='',n='';
+  try{
+   if(regInfo){p=regInfo.p;n=regInfo.n;regInfo=null;await set(ref(db,'uidPhone/'+u.uid),p)}
+   else if(u.email.endsWith('@chedarz.app'))p=u.email.split('@')[0];
+   else p=(await get(ref(db,'uidPhone/'+u.uid))).val()||'';
+   if(!n&&p)n=(await get(ref(db,'users/'+p+'/name'))).val()||'';
+  }catch(e){}
+  if(!p){$('#warn').textContent='Akun ini belum terhubung ke nomor telepon. Daftar ulang dengan nomor.';signOut(auth);return}
+  enter(n||('+'+p),p);
  });
 })();
 
-let regName='';
-async function doAuth(isReg){
+let regInfo=null,regMode=false;
+function setMode(r){
+ regMode=r;document.querySelectorAll('.rg').forEach(e=>e.style.display=r?'':'none');
+ $('#em').placeholder=r?'Email':'Email atau nomor telepon';
+ $('#go').textContent=r?'Daftar':'Masuk';$('#reg').textContent=r?'Sudah punya akun? Masuk':'Daftar akun baru';
+ $('#fg').style.display=r?'none':'';$('#warn').textContent='';
+ $('#lp').textContent=r?'Buat akun dengan nama, nomor telepon, dan email aktif (untuk pemulihan kata sandi).':'Masuk dengan email atau nomor telepon dan kata sandi.';
+}
+async function doAuth(){
  const w=$('#warn');w.textContent='';
- const n=$('#nm').value.trim(),p=norm($('#ph').value),pw=$('#pw').value;
- if(!p){w.textContent='Nomor telepon tidak valid.';return}
+ const pw=$('#pw').value,idv=$('#em').value.trim();
  if(pw.length<6){w.textContent='Kata sandi minimal 6 karakter.';return}
- if(isReg&&n.length<2){w.textContent='Isi nama (min. 2 huruf) untuk mendaftar.';return}
- const em=p+'@chedarz.app';
  try{
-  if(isReg){regName=n;await createUserWithEmailAndPassword(auth,em,pw)}
-  else await signInWithEmailAndPassword(auth,em,pw);
+  if(regMode){
+   const n=$('#nm').value.trim(),p=norm($('#ph').value),em=idv.toLowerCase();
+   if(n.length<2){w.textContent='Isi nama (min. 2 huruf).';return}
+   if(!p){w.textContent='Nomor telepon tidak valid.';return}
+   if(!/^\S+@\S+\.\S+$/.test(em)){w.textContent='Isi email yang valid.';return}
+   if((await get(ref(db,'users/'+p+'/name'))).exists()){w.textContent='Nomor ini sudah dipakai akun lain.';return}
+   regInfo={n,p};
+   await createUserWithEmailAndPassword(auth,em,pw);
+  }else{
+   const em=idv.includes('@')?idv.toLowerCase():(norm(idv)?norm(idv)+'@chedarz.app':'');
+   if(!em){w.textContent='Isi email atau nomor telepon yang benar.';return}
+   await signInWithEmailAndPassword(auth,em,pw);
+  }
  }catch(e){
-  const c=e&&e.code||'';
-  w.textContent=c==='auth/email-already-in-use'?'Nomor sudah terdaftar. Tekan Masuk.':c==='auth/operation-not-allowed'?'Aktifkan Email/Password di Firebase Authentication.':c==='auth/weak-password'?'Kata sandi terlalu lemah.':c==='auth/operation-not-supported-in-this-environment'?'Buka lewat link https (hosting), bukan file lokal.':(c==='auth/invalid-credential'||c==='auth/user-not-found'||c==='auth/wrong-password')?'Nomor atau kata sandi salah.':'Gagal ('+c+').';
+  regInfo=null;const c=e&&e.code||'';
+  w.textContent=c==='auth/email-already-in-use'?'Email sudah terdaftar. Tekan "Sudah punya akun? Masuk".':c==='auth/invalid-email'?'Format email tidak valid.':c==='auth/operation-not-allowed'?'Aktifkan Email/Password di Firebase Authentication.':c==='auth/weak-password'?'Kata sandi terlalu lemah.':(c==='auth/invalid-credential'||c==='auth/user-not-found'||c==='auth/wrong-password')?'Email/nomor atau kata sandi salah.':c==='auth/operation-not-supported-in-this-environment'?'Buka lewat link https (hosting), bukan file lokal.':c==='auth/too-many-requests'?'Terlalu banyak percobaan. Coba lagi nanti.':'Gagal ('+c+').';
  }
+}
+async function resetPw(){
+ const w=$('#warn'),v=$('#em').value.trim();
+ if(!v.includes('@')){w.textContent='Isi emailmu di kolom Email, lalu tekan Lupa kata sandi.';return}
+ try{await sendPasswordResetEmail(auth,v.toLowerCase());w.textContent='Jika email terdaftar, link reset sudah dikirim. Cek inbox dan folder spam.'}
+ catch(e){w.textContent='Gagal mengirim ('+(e&&e.code||'error')+').'}
 }
 function enter(n,p){
  me=p;myName=n;
@@ -170,8 +219,8 @@ function enter(n,p){
  update(u,{name:n}).catch(e=>{$('#warn').textContent='Gagal masuk ('+(e&&e.code||'error')+'). Cek aturan database.'});
  const on=ref(db,'users/'+me+'/online');set(on,true);onDisconnect(on).set(false);
  onDisconnect(ref(db,'users/'+me+'/last')).set(serverTimestamp());
- $('#mav').textContent=n[0];$('#mph').textContent=n+' · +'+me;
- show('list');
+ setAv($('#mav'),me,n[0]);$('#mph').textContent=n+' · +'+me;
+ show('list');setTab('p');
  lOff=onValue(ref(db,'userChats/'+me),s=>{items=s.val()||{};renderList()});
  gOff=onValue(ref(db,'userGroups/'+me),s=>{gitems=s.val()||{};renderList()});
 }
@@ -182,7 +231,7 @@ function renderList(){
  if(!a.length)box.appendChild(el('div','emp',tab==='p'?'Belum ada chat.\nTekan 💬 untuk mulai chat dengan nomor teman.':'Belum ada grup.\nTekan 👥 untuk membuat grup atau gabung dengan kode.'));
  a.forEach(([p,v])=>{
   const b=el('button','it'),nm=v.name||('+'+p);
-  b.appendChild(el('div','av',nm[0]==='+'?'#':nm[0]));
+  const av=el('div','av');if(tab==='p')setAv(av,p,nm[0]==='+'?'#':nm[0]);else av.textContent=nm[0];b.appendChild(av);
   const c=el('div','c'),r1=el('div','r'),r2=el('div','r');
   r1.appendChild(el('b','',nm));r1.appendChild(el('span','tm'+(v.unread?' u':''),v.ts?hm(v.ts):''));
   r2.appendChild(el('div','l',v.last||''));if(v.unread)r2.appendChild(el('span','bd',v.unread));
@@ -191,7 +240,7 @@ function renderList(){
 }
 function openChat(p,nm){
  mode='p';peer=p;peerName=nm;cid=[me,p].sort().join('_');msgs=[];seen={};pinfo={};ptyping=false;mySeen=0;sel=null;
- $('#ct').textContent=nm;$('#cav').textContent=nm[0]==='+'?'#':nm[0];$('#err').textContent='';
+ $('#ct').textContent=nm;setAv($('#cav'),p,nm[0]==='+'?'#':nm[0]);$('#lg').style.display='none';$('#err').textContent='';
  show('chat');
  if(items[p])update(ref(db,'userChats/'+me+'/'+p),{unread:0}).catch(()=>{});
  offs=[
@@ -216,7 +265,8 @@ function render(){
   const own=m.from===me,row=el('div','m'+(own?' me':'')),b=el('div','t');
   if(mode==='g'&&!own){const gn=el('div','gn',m.name||'Anonim');gn.style.color=col(m.name||'');b.appendChild(gn)}
   if(m.reply&&!m.del){const q=el('div','q');q.appendChild(el('b','',m.reply.name));q.appendChild(document.createTextNode(m.reply.text));b.appendChild(q)}
-  b.appendChild(m.del?el('span','del','🚫 Pesan ini telah dihapus'):el('span','',m.text));
+  if(m.img&&!m.del){const im=el('img','ci');im.src=m.img;b.appendChild(im)}
+  if(m.del||m.text)b.appendChild(m.del?el('span','del','🚫 Pesan ini telah dihapus'):el('span','',m.text));
   const mt=el('span','mt',hm(ts));
   if(own&&!m.del){const rd=mode==='p'&&ts<=seen;mt.appendChild(el('span','tk'+(rd?' b':''),rd||(mode==='p'&&pinfo.online)?'✓✓':'✓'))}
   b.appendChild(mt);
@@ -235,24 +285,25 @@ function render(){
  if(document.visibilityState==='visible'&&typeof last==='number'&&last>mySeen){mySeen=last;set(ref(db,P()+'/seen/'+me),last).catch(()=>{})}
 }
 function setReply(m){
- sel=null;replyTo={name:m.from===me?'Kamu':((mode==='g'?m.name:peerName)||'Anonim'),text:(m.text||'').slice(0,80)};
+ sel=null;replyTo={name:m.from===me?'Kamu':((mode==='g'?m.name:peerName)||'Anonim'),text:(m.text||(m.img?'📷 Foto':'')).slice(0,80)};
  $('#rq').textContent='';$('#rq').appendChild(el('b','',replyTo.name));$('#rq').appendChild(document.createTextNode(replyTo.text));
  $('#rp').style.display='flex';render();$('#inp').focus();
 }
 const clearReply=()=>{replyTo=null;$('#rp').style.display='none'};
 function stopTyping(){if(typing){typing=false;remove(ref(db,P()+'/typing/'+me)).catch(()=>{})}}
-async function send(){
+async function send(img){
  const t=$('#inp').value.trim();
- if(!t||sending)return;
+ if((!t&&!img)||sending)return;
  sending=true;$('#inp').value='';$('#err').textContent='';stopTyping();clearTimeout(tT);
  const data={from:me,name:myName,text:t.slice(0,500),ts:serverTimestamp()};
+ if(img)data.img=img;const lt=img&&!t?'📷 Foto':t.slice(0,60);
  if(replyTo)data.reply=replyTo;
  const mk=push(ref(db,P()+'/messages')).key,up={};
  up[P()+'/messages/'+mk]=data;
- if(mode==='g'){Object.keys(members).forEach(k=>{const b='userGroups/'+k+'/'+cid;up[b+'/last']=(k===me?'Kamu: ':myName+': ')+t.slice(0,60);up[b+'/ts']=serverTimestamp();up[b+'/unread']=k===me?0:increment(1)})}else{
- up['userChats/'+me+'/'+peer+'/name']=peerName;up['userChats/'+me+'/'+peer+'/last']='Kamu: '+t.slice(0,60);
+ if(mode==='g'){Object.keys(members).forEach(k=>{const b='userGroups/'+k+'/'+cid;up[b+'/last']=(k===me?'Kamu: ':myName+': ')+lt;up[b+'/ts']=serverTimestamp();up[b+'/unread']=k===me?0:increment(1)})}else{
+ up['userChats/'+me+'/'+peer+'/name']=peerName;up['userChats/'+me+'/'+peer+'/last']='Kamu: '+lt;
  up['userChats/'+me+'/'+peer+'/ts']=serverTimestamp();up['userChats/'+me+'/'+peer+'/unread']=0;
- up['userChats/'+peer+'/'+me+'/name']=myName;up['userChats/'+peer+'/'+me+'/last']=t.slice(0,60);
+ up['userChats/'+peer+'/'+me+'/name']=myName;up['userChats/'+peer+'/'+me+'/last']=lt;
  up['userChats/'+peer+'/'+me+'/ts']=serverTimestamp();up['userChats/'+peer+'/'+me+'/unread']=increment(1);}
  try{await update(ref(db),up);clearReply()}catch(e){$('#inp').value=t;$('#err').textContent='Pesan gagal terkirim ('+(e&&e.code||'error')+').'}
  sending=false;$('#inp').focus();setTimeout(()=>{$('#msgs').scrollTop=$('#msgs').scrollHeight},50);
@@ -270,7 +321,7 @@ async function newChat(){
 }
 EMO.forEach(e=>{const b=el('button','',e);b.onclick=()=>{$('#inp').value+=e;$('#inp').focus()};$('#em').appendChild(b)});
 $('#eb').onclick=()=>{const p=$('#em');p.style.display=p.style.display==='flex'?'none':'flex'};
-$('#go').onclick=()=>doAuth(false);$('#reg').onclick=()=>doAuth(true);$('#pw').addEventListener('keydown',e=>{if(e.key==='Enter'&&!$('#go').disabled)doAuth(false)});
+$('#go').onclick=doAuth;$('#reg').onclick=()=>setMode(!regMode);$('#fg').onclick=resetPw;$('#pw').addEventListener('keydown',e=>{if(e.key==='Enter'&&!$('#go').disabled)doAuth()});setMode(false);
 $('#fab').onclick=()=>{if(tab==='p'){$('#nc').style.display='flex';$('#np').focus()}else if(tab==='g')$('#gc').style.display='flex';else openComposer()};
 $('#nx').onclick=()=>{$('#nc').style.display='none';$('#ne').textContent=''};
 $('#ng').onclick=newChat;$('#np').addEventListener('keydown',e=>{if(e.key==='Enter')newChat()});
@@ -279,7 +330,7 @@ const col=n=>['#d84315','#b26a00','#e65100','#6d4c41','#c62828','#bf360c','#8d6e
 function setTab(t){tab=t;['p','g','o','v'].forEach(k=>$('#t'+k).classList.toggle('on',k===t));$('#fab').textContent={p:'💬',g:'👥',o:'✍️',v:'🎬'}[t];if(t==='o'||t==='v')ensureFeed(t);renderList()}
 function openGroup(g,nm){
  mode='g';cid=g;peerName=nm;msgs=[];members={};gtyp={};mySeen=0;sel=null;
- $('#ct').textContent=nm;$('#cav').textContent=nm[0];$('#err').textContent='';
+ $('#ct').textContent=nm;$('#cav').style.background='';$('#cav').textContent=nm[0];$('#lg').style.display='';$('#err').textContent='';
  show('chat');
  if(gitems[g])update(ref(db,'userGroups/'+me+'/'+g),{unread:0}).catch(()=>{});
  offs=[
@@ -335,12 +386,13 @@ function videoBox(id,v){
 }
 function renderFeed(){
  if(tab==='v'&&[...document.querySelectorAll('#lst video')].some(v=>!v.paused))return;
+ const fi=document.activeElement;if(fi&&fi.tagName==='INPUT'&&$('#lst').contains(fi)&&fi.value)return;
  const box=$('#lst');box.textContent='';
  const a=Object.entries(tab==='o'?posts:vids).sort((x,y)=>(y[1].ts||0)-(x[1].ts||0));
  if(!a.length){box.appendChild(el('div','emp',tab==='o'?'Belum ada postingan.\nTekan ✍️ untuk membuat.':'Belum ada video.\nTekan 🎬 untuk mengunggah.'));return}
  a.forEach(([id,v])=>{
   const c=el('div','pc'),h=el('div','ph'),w=el('div',''),t=v.ts||Date.now();
-  h.appendChild(el('div','av',(v.name||'?')[0]));
+  {const av=el('div','av');setAv(av,v.from,(v.name||'?')[0]);h.appendChild(av)}
   w.appendChild(el('b','',v.name||'Anonim'));w.appendChild(el('small','',dl(t)+' '+hm(t)));h.appendChild(w);
   if(v.from===me){const d=el('button','','🗑');d.onclick=()=>delPost(id);h.appendChild(d)}
   c.appendChild(h);
@@ -348,7 +400,22 @@ function renderFeed(){
   else{if(v.cap)c.appendChild(el('div','pt',v.cap));c.appendChild(videoBox(id,v))}
   const lk=v.likes?Object.keys(v.likes):[],on=lk.includes(me),b=el('button','lk'+(on?' on':''));b.innerHTML=CHEESE;b.appendChild(el('span','',String(lk.length)));
   b.onclick=()=>set(ref(db,(tab==='o'?'posts/':'videos/')+id+'/likes/'+me),on?null:true).catch(()=>{});
-  c.appendChild(b);box.appendChild(c);
+  c.appendChild(b);
+  if(tab==='o'){
+   const cm=v.comments?Object.entries(v.comments).sort((x,y)=>(x[1].ts||0)-(y[1].ts||0)):[];
+   const cb=el('button','lk','💬 '+cm.length);cb.style.marginLeft='8px';
+   cb.onclick=()=>{openC[id]=!openC[id];renderFeed()};c.appendChild(cb);
+   if(openC[id]){
+    const cl=el('div','cl');
+    cm.forEach(([k,x])=>{const r=el('div','cr');r.appendChild(el('b','',x.name||'Anonim'));r.appendChild(document.createTextNode(' '+x.text));
+     if(x.from===me){const d=el('button','cd','✕');d.onclick=()=>remove(ref(db,'posts/'+id+'/comments/'+k));r.appendChild(d)}
+     cl.appendChild(r)});
+    const f=el('div','cf'),i=el('input'),sb=el('button','','Kirim');i.placeholder='Tulis komentar…';i.maxLength=300;
+    const go=()=>{const t=i.value.trim();if(!t)return;i.value='';set(push(ref(db,'posts/'+id+'/comments')),{from:me,name:myName,text:t,ts:serverTimestamp()}).catch(()=>{})};
+    sb.onclick=go;i.onkeydown=e=>{if(e.key==='Enter')go()};f.appendChild(i);f.appendChild(sb);cl.appendChild(f);c.appendChild(cl);
+   }
+  }
+  box.appendChild(c);
  });
 }
 function delPost(id){
@@ -360,11 +427,11 @@ function openComposer(){
  $('#pct').textContent=o?'Postingan baru':'Video pendek baru';
  $('#ptx').placeholder=o?'Tulis sesuatu…':'Tulis keterangan video…';
  $('#pf').accept=o?'image/*':'video/*';$('#pf').value='';$('#pfl').textContent=o?'Pilih foto (opsional)':'Pilih video (maks. 3 MB)';
- $('#ppv').style.display='none';$('#ptx').value='';$('#pe').textContent='';$('#pc').style.display='flex';
+ camFile=null;$('#pcm').textContent=o?'📷 Ambil foto dengan kamera':'🎥 Rekam video dengan kamera';$('#ppv').style.display='none';$('#ptx').value='';$('#pe').textContent='';$('#pc').style.display='flex';
 }
 const closeComposer=()=>{$('#pc').style.display='none'};
 async function submitPost(){
- const t=$('#ptx').value.trim(),f=$('#pf').files[0],e=$('#pe'),b=$('#po');e.textContent='';
+ const t=$('#ptx').value.trim(),f=camFile||$('#pf').files[0],e=$('#pe'),b=$('#po');e.textContent='';
  b.disabled=true;b.textContent='Mengirim…';
  try{
   if(tab==='o'){
@@ -383,16 +450,76 @@ async function submitPost(){
  }catch(x){e.textContent='Gagal mengirim ('+(x&&x.code||'error')+').'}
  finally{b.disabled=false;b.textContent='Kirim'}
 }
-$('#pf').onchange=()=>{const f=$('#pf').files[0],v=$('#ppv');$('#pfl').textContent=f?f.name:'Pilih file';if(f&&tab==='o'){v.src=URL.createObjectURL(f);v.style.display='block'}else v.style.display='none'};
+$('#pf').onchange=()=>{camFile=null;const f=$('#pf').files[0],v=$('#ppv');$('#pfl').textContent=f?f.name:'Pilih file';if(f&&tab==='o'){v.src=URL.createObjectURL(f);v.style.display='block'}else v.style.display='none'};
 $('#po').onclick=submitPost;$('#px').onclick=closeComposer;
+let cs=null,cface='environment',rec=null,chunks=[],rt=null,camFile=null;
+async function camStart(){
+ camStop();
+ try{
+  const g=a=>navigator.mediaDevices.getUserMedia({video:{facingMode:cface,width:{ideal:640},height:{ideal:640}},audio:a});
+  cs=await g(tab==='v').catch(()=>g(false));
+  $('#cmv').srcObject=cs;
+ }catch(e){$('#pe').textContent='Kamera tidak bisa dibuka. Izinkan akses kamera di browser.';camClose()}
+}
+function camStop(){if(cs){cs.getTracks().forEach(t=>t.stop());cs=null}}
+function camClose(){
+ clearInterval(rt);
+ if(rec&&rec.state!=='inactive'){rec.onstop=null;rec.stop()}
+ rec=null;camStop();$('#cam').style.display='none';$('#cmr').style.background='#e53935';$('#cmt').textContent='';
+}
+function openCam(){$('#cam').style.display='flex';$('#cmt').textContent=tab==='o'?'Ketuk tombol merah untuk foto':'Ketuk tombol merah untuk rekam (maks. 15 dtk)';camStart()}
+function setCam(b,k){
+ camFile=b;const v=$('#ppv');
+ $('#pfl').textContent=k==='v'?'Video dari kamera ('+(b.size/1048576).toFixed(1)+' MB)':'Foto dari kamera';
+ if(k==='v')v.style.display='none';else{v.src=URL.createObjectURL(b);v.style.display='block'}
+}
+function camShot(){
+ const v=$('#cmv'),c=document.createElement('canvas'),r=Math.min(1,720/Math.max(v.videoWidth,v.videoHeight));
+ c.width=v.videoWidth*r;c.height=v.videoHeight*r;c.getContext('2d').drawImage(v,0,0,c.width,c.height);
+ c.toBlob(b=>{setCam(b,'p');camClose()},'image/jpeg',.6);
+}
+function camRec(){
+ if(rec&&rec.state==='recording'){rec.stop();return}
+ const mt=['video/webm;codecs=vp8,opus','video/webm','video/mp4'].find(t=>window.MediaRecorder&&MediaRecorder.isTypeSupported(t));
+ if(!mt){$('#pe').textContent='Perekaman video tidak didukung browser ini.';camClose();return}
+ chunks=[];rec=new MediaRecorder(cs,{mimeType:mt,videoBitsPerSecond:600000,audioBitsPerSecond:48000});
+ rec.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};
+ rec.onstop=()=>{clearInterval(rt);setCam(new Blob(chunks,{type:mt.split(';')[0]}),'v');camClose()};
+ rec.start(500);let t=0;$('#cmr').style.background='#fff';$('#cmt').textContent='● 0 dtk';
+ rt=setInterval(()=>{t++;$('#cmt').textContent='● '+t+' dtk';if(t>=15)rec.stop()},1000);
+}
+$('#pcm').onclick=openCam;
+$('#cmr').onclick=()=>tab==='o'?camShot():camRec();
+$('#cmx').onclick=camClose;
+$('#cms').onclick=()=>{cface=cface==='environment'?'user':'environment';if(!(rec&&rec.state==='recording'))camStart()};
+const pq={};
+function setAv(e,u,l){
+ e.style.background='';e.textContent=l;
+ pq[u]=pq[u]||get(ref(db,'users/'+u+'/photo')).then(s=>s.val()||'').catch(()=>'');
+ pq[u].then(d=>{if(d){e.style.background='url("'+d+'") center/cover';e.textContent=''}});
+}
+$('#ab').onclick=()=>$('#af').click();
+$('#af').onchange=async()=>{const f=$('#af').files[0];$('#af').value='';if(!f)return;try{send(await shrink(f,700,.6))}catch(e){$('#err').textContent='Gagal memproses foto.'}};
+function openProfile(){setAv($('#pav'),me,myName[0]);$('#pnm').textContent=myName+' · +'+me;$('#pr').style.display='flex'}
+const refreshAv=()=>{delete pq[me];setAv($('#pav'),me,myName[0]);setAv($('#mav'),me,myName[0])};
+$('#mav').onclick=openProfile;$('#mav').style.cursor='pointer';
+$('#pcx').onclick=()=>{$('#pr').style.display='none'};
+$('#pfi').onchange=async()=>{const f=$('#pfi').files[0];$('#pfi').value='';if(!f)return;
+ try{await set(ref(db,'users/'+me+'/photo'),await shrink(f,200,.7));refreshAv()}catch(e){alert('Gagal mengganti foto.')}};
+$('#prm').onclick=async()=>{try{await remove(ref(db,'users/'+me+'/photo'));refreshAv()}catch(e){}};
+$('#lg').onclick=async()=>{
+ if(!confirm('Keluar dari grup "'+peerName+'"?'))return;
+ const up={};up['groups/'+cid+'/members/'+me]=null;up['userGroups/'+me+'/'+cid]=null;
+ try{await update(ref(db),up);back()}catch(e){$('#err').textContent='Gagal keluar dari grup.'}
+};
 $('#gm').onclick=mkGroup;$('#gj').onclick=joinGroup;$('#gx').onclick=()=>{$('#gc').style.display='none';$('#ge').textContent=''};
-$('#bk').onclick=back;$('#send').onclick=send;$('#rx').onclick=clearReply;
+$('#bk').onclick=back;$('#send').onclick=()=>send();$('#rx').onclick=clearReply;
 $('#inp').addEventListener('keydown',e=>{if(e.key==='Enter')send()});
 $('#inp').addEventListener('input',()=>{
  if(!typing){typing=true;const r=ref(db,P()+'/typing/'+me);set(r,mode==='g'?myName:true).catch(()=>{});onDisconnect(r).remove()}
  clearTimeout(tT);tT=setTimeout(stopTyping,2500);
 });
-$('#out').onclick=()=>{if(!confirm('Keluar dari akun ini?'))return;if(lOff)lOff();if(gOff)gOff();Object.values(fOff).forEach(f=>f());fOff={};posts={};vids={};set(ref(db,'users/'+me+'/online'),false);signOut(auth);me='';regName='';$('#pw').value='';show('login')};
+$('#out').onclick=()=>{if(!confirm('Keluar dari akun ini?'))return;if(lOff)lOff();if(gOff)gOff();Object.values(fOff).forEach(f=>f());fOff={};posts={};vids={};set(ref(db,'users/'+me+'/online'),false);signOut(auth);me='';regInfo=null;setMode(false);$('#pw').value='';show('login')};
 document.addEventListener('visibilitychange',()=>{if(cid&&$('#chat').style.display==='flex')render()});
 </script>
 </body>
