@@ -106,6 +106,7 @@ input{font:inherit;color:var(--fg);outline:none}
   <b id="pnm"></b>
   <label class="go" style="text-align:center;cursor:pointer;width:100%">Ganti foto<input id="pfi" type="file" accept="image/*" hidden></label>
   <button id="prm" style="color:var(--warn)">Hapus foto</button>
+  <button id="pnt" style="color:var(--pri)">🔔 Aktifkan notifikasi</button>
   <button id="pcx" style="color:var(--mut)">Tutup</button>
  </div></div>
  <div id="pc"><div>
@@ -224,9 +225,9 @@ function enter(n,p){
  const on=ref(db,'users/'+me+'/online');set(on,true);onDisconnect(on).set(false);
  onDisconnect(ref(db,'users/'+me+'/last')).set(serverTimestamp());
  setAv($('#mav'),me,n[0]);$('#mph').textContent=n+' · +'+me;
- show('list');setTab('p');
- lOff=onValue(ref(db,'userChats/'+me),s=>{items=s.val()||{};renderList()});
- gOff=onValue(ref(db,'userGroups/'+me),s=>{gitems=s.val()||{};renderList()});
+ show('list');setTab('p');Object.keys(prevU).forEach(k=>delete prevU[k]);document.addEventListener('click',askNotif,{once:true});
+ lOff=onValue(ref(db,'userChats/'+me),s=>{items=s.val()||{};notifyChanges(items,'p');renderList()});
+ gOff=onValue(ref(db,'userGroups/'+me),s=>{gitems=s.val()||{};notifyChanges(gitems,'g');renderList()});
 }
 function renderList(){
  if(tab==='o'||tab==='v'){renderFeed();return}
@@ -287,6 +288,7 @@ function render(){
  if(near)box.scrollTop=box.scrollHeight;
  const last=msgs.length?msgs[msgs.length-1].ts:0;
  if(document.visibilityState==='visible'&&typeof last==='number'&&last>mySeen){mySeen=last;set(ref(db,P()+'/seen/'+me),last).catch(()=>{})}
+ if(document.visibilityState==='visible'){const u=mode==='g'?gitems[cid]:items[peer];if(u&&u.unread)update(ref(db,mode==='g'?'userGroups/'+me+'/'+cid:'userChats/'+me+'/'+peer),{unread:0}).catch(()=>{})}
 }
 function setReply(m){
  sel=null;replyTo={name:m.from===me?'Kamu':((mode==='g'?m.name:peerName)||'Anonim'),text:(m.text||(m.img?'📷 Foto':'')).slice(0,80)};
@@ -492,6 +494,22 @@ function camRec(){
  rec.start(500);let t=0;$('#cmr').style.background='#fff';$('#cmt').textContent='● 0 dtk';
  rt=setInterval(()=>{t++;$('#cmt').textContent='● '+t+' dtk';if(t>=15)rec.stop()},1000);
 }
+const prevU={};let ac=null;
+function askNotif(){if('Notification' in window&&Notification.permission==='default')Notification.requestPermission()}
+function beep(){const A=window.AudioContext||window.webkitAudioContext;if(!A)return;ac=ac||new A();const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=880;g.gain.value=.08;o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+.15)}
+function ping(t,b){
+ try{beep()}catch(e){}
+ if(!('Notification' in window)||Notification.permission!=='granted')return;
+ navigator.serviceWorker.ready.then(r=>r.showNotification(t,{body:b,icon:'icon-192.png',badge:'icon-192.png',tag:'chedarz',renotify:true,vibrate:[120,60,120]})).catch(()=>{try{new Notification(t,{body:b})}catch(e){}});
+}
+function notifyChanges(src,pref){
+ Object.entries(src).forEach(([k,v])=>{
+  const key=pref+k,old=prevU[key],u=v.unread||0;prevU[key]=u;
+  const cur=$('#chat').style.display==='flex'&&(pref==='p'?mode==='p'&&peer===k:mode==='g'&&cid===k)&&!document.hidden;
+  if(old!==undefined&&u>old&&!cur)ping(v.name||'Chedarz',v.last||'Pesan baru');
+ });
+}
+$('#pnt').onclick=()=>{if(!('Notification' in window)){alert('Browser ini tidak mendukung notifikasi.');return}Notification.requestPermission().then(p=>{$('#pnt').textContent=p==='granted'?'🔔 Notifikasi aktif':'🔕 Diblokir (ubah di pengaturan HP)'})};
 $('#pcm').onclick=openCam;
 $('#cmr').onclick=()=>tab==='o'?camShot():camRec();
 $('#cmx').onclick=camClose;
